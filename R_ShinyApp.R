@@ -32,7 +32,7 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                 titlePanel(h3("Condition 1: Low humidity (dry) and low temperature (cold)")),
                 sidebarLayout(
                   sidebarPanel(
-                    numericInput(inputId = "Tp1", label = "Temperature (°C)", value = 5),
+                    numericInput(inputId = "Tp1", label = "Temperature (Â°C)", value = 5),
                     numericInput(inputId = "U1", label = "Relative humidity [0-1]", value = 0.1, min = 0, max = 1, step = 0.1),
                     numericInput(inputId = "mean1", label = "Average survival time", value = ""),
                     numericInput(inputId = "min1", label = "Lower value", value = ""),
@@ -51,7 +51,7 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                 titlePanel(h3("Condition 2: Low humidity (dry) and High temperature (warm)")),
                 sidebarLayout(
                   sidebarPanel(
-                    numericInput(inputId = "Tp2", label = "Temperature (°C)", value = 25),
+                    numericInput(inputId = "Tp2", label = "Temperature (Â°C)", value = 25),
                     numericInput(inputId = "U2", label = "Relative humidity [0-1]", value = 0.1, min = 0, max = 1, step = 0.1),
                     numericInput(inputId = "mean2", label = "Average survival time", value = ""),
                     numericInput(inputId = "min2", label = "Lower value", value = ""),
@@ -68,11 +68,11 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                 ),
                 
                 #Condition 3-----------------------------------------------------------------------
-                titlePanel(h3("Condition 3: Humidité haute (=humide) and température basse (=froid)")),
+                titlePanel(h3("Condition 3: HumiditÃ© haute (=humide) and tempÃ©rature basse (=froid)")),
                 sidebarLayout(
                   sidebarPanel(
-                    numericInput(inputId = "Tp3", label = "Temperature (°C)", value = 5),
-                    numericInput(inputId = "U3", label = "Humidité Relative [0-1]", value = 0.95, min = 0, max = 1, step = 0.1),
+                    numericInput(inputId = "Tp3", label = "Temperature (Â°C)", value = 5),
+                    numericInput(inputId = "U3", label = "HumiditÃ© Relative [0-1]", value = 0.95, min = 0, max = 1, step = 0.1),
                     numericInput(inputId = "mean3", label = "Moyenne", value = ""),
                     numericInput(inputId = "min3", label = "Fourchette basse", value = ""),
                     numericInput(inputId = "max3", label = "Fourchette haute", value = ""),
@@ -81,18 +81,18 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                   ),
                   mainPanel(
                     plotOutput("plot3"),
-                    h4("Paramètres"),
+                    h4("ParamÃ¨tres"),
                     tableOutput("dat3"),
                     width = 6
                   )
                 ),
                 
                 #Condition 4-----------------------------------------------------------------------
-                titlePanel(h3("Condition 4: Humidité haute (=humide) and température haute (=chaud)")),
+                titlePanel(h3("Condition 4: HumiditÃ© haute (=humide) and tempÃ©rature haute (=chaud)")),
                 sidebarLayout(
                   sidebarPanel(
-                    numericInput(inputId = "Tp4", label = "Temperature (°C)", value = 25),
-                    numericInput(inputId = "U4", label = "Humidité Relative [0-1]", value = 0.95, min = 0, max = 1, step = 0.1),
+                    numericInput(inputId = "Tp4", label = "Temperature (Â°C)", value = 25),
+                    numericInput(inputId = "U4", label = "HumiditÃ© Relative [0-1]", value = 0.95, min = 0, max = 1, step = 0.1),
                     numericInput(inputId = "mean4", label = "Moyenne", value = ""),
                     numericInput(inputId = "min4", label = "Fourchette basse", value = ""),
                     numericInput(inputId = "max4", label = "Fourchette haute", value = ""),
@@ -101,7 +101,7 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                   ),
                   mainPanel(
                     plotOutput("plot4"),
-                    h4("Paramètres"),
+                    h4("ParamÃ¨tres"),
                     tableOutput("dat4"),
                     width = 6
                   ),
@@ -110,7 +110,7 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                 titlePanel(h3("Summary")),
                 plotOutput("AllPlot", width = "800px", height = "600px"),
                 
-                titlePanel("Enregistrer vos réponses"),
+                titlePanel("Enregistrer vos rÃ©ponses"),
                 actionButton(inputId = "Submit", label = "Soumettre")
 )
 
@@ -166,7 +166,7 @@ server <- function(input, output) {
       geom_area(data = subset(df, x >= min & x <= max), aes(x=x,y=density), fill = 'lightblue') +
       geom_line(size = 1) +
       geom_segment(x = mean, y = 0, xend = mean , yend = df[df$x == mean,2], col = "red", lwd = 0.5) +
-      labs(title = paste0("Temperature = ", input$Tp1, " °C, Relative humidity = ", input$U1),  x =   expression(paste("Average survival time (days), ", italic(bar("T")))), y  = "Density") +
+      labs(title = paste0("Temperature = ", input$Tp1, " Â°C, Relative humidity = ", input$U1),  x =   expression(paste("Average survival time (days), ", italic(bar("T")))), y  = "Density") +
       theme(plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"))
     plot
   })
@@ -228,7 +228,7 @@ server <- function(input, output) {
       geom_area(data = subset(df, x >= min & x <= max), aes(x=x,y=density), fill = 'lightblue') +
       geom_line(size = 1) +
       geom_segment(x = mean, y = 0, xend = mean , yend = df[df$x == mean,2], col = "red", lwd = 0.5) +
-      labs(title = paste0("Temperature = ", input$Tp2, " °C, Relative humidity = ", input$U2),  x = "Mean survival time (days)", y  = "Density") +
+      labs(title = paste0("Temperature = ", input$Tp2, " Â°C, Relative humidity = ", input$U2),  x = "Mean survival time (days)", y  = "Density") +
       theme(plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"))
     plot
   })
@@ -291,7 +291,7 @@ server <- function(input, output) {
       geom_area(data = subset(df, x >= min & x <= max), aes(x=x,y=density), fill = 'lightblue') +
       geom_line(size = 1) +
       geom_segment(x = mean, y = 0, xend = mean , yend = df[df$x == mean,2], col = "red", lwd = 0.5) +
-      labs(title = paste0("Temperature = ", input$Tp3, " °C, Relative humidity = ", input$U3),  x = "Mean survival time (days)", y  = "Density") +
+      labs(title = paste0("Temperature = ", input$Tp3, " Â°C, Relative humidity = ", input$U3),  x = "Mean survival time (days)", y  = "Density") +
       theme(plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"))
     plot
   })
@@ -354,7 +354,7 @@ server <- function(input, output) {
       geom_area(data = subset(df, x >= min & x <= max), aes(x=x,y=density), fill = 'lightblue') +
       geom_line(size = 1) +
       geom_segment(x = mean, y = 0, xend = mean , yend = df[df$x == mean,2], col = "red", lwd = 0.5) +
-      labs(title = paste0("Temperature = ", input$Tp4, " °C, Relative humidity = ", input$U4),  x = "Mean survival time (days)", y  = "Density") +
+      labs(title = paste0("Temperature = ", input$Tp4, " Â°C, Relative humidity = ", input$U4),  x = "Mean survival time (days)", y  = "Density") +
       theme(plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"))
     plot
   })
