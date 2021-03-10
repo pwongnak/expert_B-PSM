@@ -12,7 +12,7 @@ survData$condition <- as.factor(paste(survData$temp, survData$RH_n, sep = "-"))
 condData <- survData[,-1]
 conData2 <-unique(condData)
 J <- match(survData$condition, conData2$condition) 
-theta <- conData2$temp
+Q <- conData2$temp
 U <- conData2$RH_n
 I <- nrow(survData) 
 ncond <- nrow(conData2)
@@ -25,7 +25,7 @@ M1 <- "model{
    }
    
    for(j in 1:ncond){
-      logLambda[j] <- (beta0 + (beta1 * (U[j])^k) + (beta2 * (theta[j])) + (beta3 * (theta[j]) * (U[j])^k))
+      logLambda[j] <- (beta0 + (beta1 * (U[j])^k) + (beta2 * (Q[j])) + (beta3 * (A[j]) * (U[j])^k))
       lambda[j] <- exp(logLambda[j])
    }
    
@@ -36,7 +36,7 @@ M1 <- "model{
  k ~ dunif(1, 6)
  p ~ dunif(0.01, 5)
 }"
-data_M1 <- list(I = I, Time = survData$survivalTime, ncond = ncond, theta = theta, U = U, J = J)
+data_M1 <- list(I = I, Time = survData$survivalTime, ncond = ncond, Q = Q, U = U, J = J)
 params_M1 <- c("beta0", "beta1", "beta2", "beta3", "p", "k")
 model1 <- jags.model(textConnection(M1), data = data_M1, n.chains = 3)
 update(model1, 5000*10)
@@ -72,7 +72,7 @@ M2 <- 'model{
    }
    
    for(j in 1:ncond){
-      logLambda[j] <- (beta0 + (beta1 * (U[j])^k) + (beta2 * (theta[j])) + (beta3 * (theta[j]) * (U[j])^k))
+      logLambda[j] <- (beta0 + (beta1 * (U[j])^k) + (beta2 * (Q[j])) + (beta3 * (Q[j]) * (U[j])^k))
       lambda[j] <- exp(logLambda[j])
    }
  
@@ -175,7 +175,7 @@ M2 <- 'model{
  p ~ dunif(0.01, 5)
 }'
 
-data_M2 <- list(I = I, Time = survData$survivalTime, ncond = ncond, theta = theta, U = U, J = J,
+data_M2 <- list(I = I, Time = survData$survivalTime, ncond = ncond, Q = Q, U = U, J = J,
                 N = N, expData = expData, pi = pi)
 params_M2 <- c("beta0", "beta1", "beta2", "beta3", "p", "k", "epsilon", "Beta0", "Beta1", "Beta2", "Beta3")
 model2 <- jags.model(textConnection(M2), data = data_M2, n.chains = 3)
@@ -197,7 +197,7 @@ M3 <- 'model{
    }
    
    for(j in 1:ncond){
-      logLambda[j] <- (beta0 + (beta1 * (U[j])^k) + (beta2 * (theta[j])) + (beta3 * (theta[j]) * (U[j])^k))
+      logLambda[j] <- (beta0 + (beta1 * (U[j])^k) + (beta2 * (Q[j])) + (beta3 * (Q[j]) * (U[j])^k))
       lambda[j] <- exp(logLambda[j])
    }
  
@@ -299,7 +299,7 @@ M3 <- 'model{
  p ~ dunif(0.01, 5)
 }'
 
-data_M3 <- list(I = I, Time = survData$survivalTime, ncond = ncond, theta = theta, U = U, J = J,
+data_M3 <- list(I = I, Time = survData$survivalTime, ncond = ncond, Q = Q, U = U, J = J,
                 N = N, expData = expData)
 params_M3 <- c("beta0", "beta1", "beta2", "beta3", "p", "k", "Beta0", "Beta1", "Beta2", "Beta3")
 model3 <- jags.model(textConnection(M3), data = data_M3, n.chains = 3)
